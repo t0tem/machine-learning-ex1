@@ -81,13 +81,43 @@ X = [ones(m, 1) X];
 
 fprintf('Running gradient descent ...\n');
 
+
+% learning rate selection step 1
+alpha1 = 0.03;
+num_iters1 = 50;
+theta1 = zeros(3, 1);
+[theta1, J1] = gradientDescentMulti(X, y, theta1, alpha1, num_iters1);
+
+% learning rate selection step 2
+alpha2 = 0.1;
+num_iters2 = 50;
+theta2 = zeros(3, 1);
+[theta2, J2] = gradientDescentMulti(X, y, theta2, alpha2, num_iters2);
+
+% learning rate selection step 3
+alpha3 = 0.3;
+num_iters3 = 50;
+theta3 = zeros(3, 1);
+[theta3, J3] = gradientDescentMulti(X, y, theta3, alpha3, num_iters3);
+
+% plotting (each time after each of 3 steps)
+figure;
+plot(J1, 'b');
+hold on;
+plot(J2, 'r');
+plot(J3, 'k');
+
+
+
 % Choose some alpha value
-alpha = 0.01;
-num_iters = 400;
+alpha = 0.3; % instead of 0.01
+num_iters = 50; % instead of 400
 
 % Init Theta and Run Gradient Descent 
 theta = zeros(3, 1);
 [theta, J_history] = gradientDescentMulti(X, y, theta, alpha, num_iters);
+
+
 
 % Plot the convergence graph
 figure;
@@ -104,7 +134,9 @@ fprintf('\n');
 % ====================== YOUR CODE HERE ======================
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
-price = 0; % You should change this
+
+X_new = [ones(1, 1), ([1650 3]-mu) ./ sigma];
+price = X_new * theta; % You should change this
 
 
 % ============================================================
@@ -149,7 +181,7 @@ fprintf('\n');
 
 % Estimate the price of a 1650 sq-ft, 3 br house
 % ====================== YOUR CODE HERE ======================
-price = 0; % You should change this
+price = [1 1650 3]*theta; % You should change this
 
 
 % ============================================================
